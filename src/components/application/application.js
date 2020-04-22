@@ -1,13 +1,21 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import Dashboard from "./pages/dashboard/dashboard";
 
-function Application() {
-  return (
-    <div className="App">
-      APP <br />
-        <Link to={`/logout`}>Logout</Link>
-    </div>
-  );
+class Application extends React.Component{
+    render() {
+        return (
+            <div className="app container">
+                <Router>
+                    <Switch>
+                        <Route path="/" >
+                            <Dashboard />
+                        </Route>
+                    </Switch>
+                </Router>
+            </div>
+          )
+        }
 }
 
 export default Application;
