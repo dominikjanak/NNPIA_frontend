@@ -7,10 +7,7 @@ export default class Login extends React.Component {
     token;
     constructor(props) {
         super(props);
-        this.state = {
-            invalid: false,
-            redirect: false,
-        };
+        this.state = { redirect: false };
     }
 
     render() {
@@ -19,25 +16,20 @@ export default class Login extends React.Component {
                 { this.state.redirect &&
                     <Redirect to="/" />
                 }
-                <div className="row">
+                <div className="row mt-5">
                     <div className="col-12 mt-5">
                         <form className="login bg-gray-2 py-5 px-4" onSubmit={(e) => this.handleSubmit(e)}>
                             <img src={ process.env.REACT_APP_LOGO_BIG_INV } alt="Logo" className="logo" />
 
                             <div className="form-group mt-3">
-                                <label htmlFor="username">Uživatelské jméno</label>
-                                <input type="text" className="form-control" name="username" placeholder="Zadejte uživatelské jméno" />
+                                <label htmlFor="username">Uživatelské jméno:</label>
+                                <input type="text" className="form-control" name="username" required placeholder="Zadejte uživatelské jméno" />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="password">Heslo</label>
-                                <input type="password" className="form-control" name="password" placeholder="Zadejte heslo" />
+                                <label htmlFor="password">Heslo:</label>
+                                <input type="password" className="form-control" name="password" required placeholder="Zadejte heslo" />
                             </div>
-                            { this.state.invalid &&
-                                <div className="alert alert-danger">
-                                    Neplatné přihlašovací údaje
-                                </div>
-                            }
                             <input type="submit" className="btn w-100 btn-primary" value="Přihlásit se" />
                         </form>
                     </div>
@@ -67,7 +59,13 @@ export default class Login extends React.Component {
                 if(res.response === 'OK' && setSessionToken(res.token)) {
                     this.setState({ redirect: true })
                 } else {
-                    this.setState({ invalid: true })
+                    // eslint-disable-next-line no-undef
+                    $("body").overhang({
+                        type: "error",
+                        message: "Nesprávné přihlašovací údaje!",
+                        duration: 4,
+                        closeConfirm: true
+                    });
                 }
             })
             .catch((e) => console.log("error: " + e));
