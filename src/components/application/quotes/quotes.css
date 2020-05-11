@@ -1,0 +1,28 @@
+.quote-item {
+    background: #eee;
+    border-radius: 10px;
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.25);
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.25);
+}
+
+.quote-item .quote {
+    font-size: 27px;
+    font-weight: 100;
+}
+
+.quote-item .author {
+    font-size: 22px;
+    font-weight: bold;
+    color: #444;
+}
+
+.quote-item .user {
+    font-size: 14px;
+    color: #555;
+    font-weight: 400;
+}
+
+.quote-item .user span {
+    font-weight: 500;
+}

@@ -2,17 +2,17 @@ import axios from 'axios';
 
 const SESSION_VARIABLE = '__session';
 
-class SesstionService {
+class SessionService {
 
     login(username, password){
-        return axios.post(process.env.REACT_APP_API_URI + "/login", {
+        return axios.post(process.env.REACT_APP_API_URI + "/security/login", {
             username: username,
             password: password
         });
     }
 
     register(username, password, firstname, surname, email){
-        return axios.post(process.env.REACT_APP_API_URI + "/register", {
+        return axios.post(process.env.REACT_APP_API_URI + "/security/register", {
             username: username,
             firstname: firstname,
             surname: surname,
@@ -36,7 +36,7 @@ class SesstionService {
     logout() {
         const header = this.getAuthHeader();
         this.deleteSession();
-        axios.post(process.env.REACT_APP_API_URI + '/logout', {}, header);
+        axios.post(process.env.REACT_APP_API_URI + '/security/logout', {}, header);
     }
 
     getUsername(){
@@ -96,4 +96,4 @@ class SesstionService {
     }
 }
 
-export default new SesstionService();
+export default new SessionService();
