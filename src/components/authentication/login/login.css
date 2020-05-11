@@ -1,7 +1,3 @@
-body {
-    background: #e8e8e8;
-}
-
 .login {
     max-width: 350px;
     margin: 0 auto;
@@ -9,5 +5,15 @@ body {
     -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
     -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
     box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
+}
 
+.login .title {
+    color: #333;
+    margin-top: 15px;
+    font-size: 30px;
+}
+
+.login-table-fit {
+    width: 1px;
+    margin: auto;
 }
