@@ -1,0 +1,33 @@
+.container {
+    max-width: 960px;
+}
+
+.header .site-header {
+    background-color: rgba(0, 0, 0, .85);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+}
+.header .site-header a {
+    color: #999;
+    transition: ease-in-out color .15s;
+}
+.header .site-header a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.header .site-header img {
+    height: 30px;
+    position: relative;
+    top: 0px;
+}
+
+.content .page-title h1{
+    font-size: 35px;
+    color: #222;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}

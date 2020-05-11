@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Authentication from "./components/authentication/authentication";
+import MainRouter from "./components/MainRouter";
 
 ReactDOM.render(
   <React.StrictMode>
-      <Authentication />
+      <MainRouter />
   </React.StrictMode>,
   document.getElementById('root')
 );
