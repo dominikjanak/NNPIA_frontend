@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './styles/app.css';
+import '../../styles/app.css';
 import ApplicationLayout from "./layout/ApplicationLayout";
 
 class QuoteListComponent extends React.Component {

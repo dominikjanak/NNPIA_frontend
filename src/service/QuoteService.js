@@ -1,12 +1,20 @@
-import axios from 'axios';
-import SessionService from './SessionService';
-import PopupMessagesService from "./PopupMessagesService";
-
-const USER_API_BASE_URL = process.env.REACT_APP_API_URI + '/api/quote';
+import axios, { setupAuthentication } from "../config/axios";
 
 class QuoteService {
-    fetchQuotes(page = 0) {
-        return axios.get(USER_API_BASE_URL + '/', SessionService.getAuthHeader());
+    fetchQuotes(actualPage, orderBy, order) {
+
+        const queryParams = {
+            page: actualPage,
+            size: 25,
+            sort: orderBy+","+order,
+        }
+        setupAuthentication();
+        return axios.get("/api/quote/", {params: queryParams});
+    }
+
+    delete(quoteId) {
+        setupAuthentication();
+        return axios.delete("/api/quote/"+quoteId);
     }
 }
 

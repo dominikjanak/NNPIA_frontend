@@ -26,3 +26,7 @@
 .quote-item .user span {
     font-weight: 500;
 }
+
+.quote-item .categories .badge:not(:last-child) {
+    margin-right:4px
+}

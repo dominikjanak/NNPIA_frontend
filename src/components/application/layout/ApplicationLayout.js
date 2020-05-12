@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './AppLayoutStyles.css';
+import '../../../styles/appLayout.css';
 
 function ApplicationLayout (props){
   return(

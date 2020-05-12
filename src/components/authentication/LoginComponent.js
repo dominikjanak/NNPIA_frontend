@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './styles/login.css';
+import '../../styles/login.css';
 import SessionService from "../../service/SessionService.js";
 import PopupMessagesService from "../../service/PopupMessagesService.js";
 import { Link } from "react-router-dom";

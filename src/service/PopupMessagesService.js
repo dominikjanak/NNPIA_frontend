@@ -45,12 +45,13 @@ class PopupMessagesService {
         });
     }
 
-    async confirm(message){
+    async confirm(message, callbackFnc){
         // eslint-disable-next-line no-undef
-        await  $("body").overhang({
+        $("body").overhang({
             type: "confirm",
             message: message,
-            overlay: true
+            overlay: true,
+            callback: callbackFnc
         });
     }
 }

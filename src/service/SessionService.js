@@ -30,7 +30,11 @@ class SessionService {
     }
 
     getAuthHeader() {
-        return {headers: {Authorization: 'Bearer ' + this.getToken() }};
+        const token = this.getToken();
+        if (token === undefined) {
+            return undefined;
+        }
+        return 'Bearer ' + token;
     }
 
     logout() {
