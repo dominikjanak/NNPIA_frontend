@@ -1,51 +1,86 @@
-import axios, { setupAuthentication } from "../config/axios";
+import axios, {setupAuthentication} from "../config/axios";
 
+/**
+ * Category service
+ */
 class CategoryService {
-    fetch(actualPage, orderBy, order) {
-        const queryParams = {
-            page: actualPage,
-            size: 15,
-            sort: orderBy+","+order,
-        }
-
-        setupAuthentication();
-        return axios.get("/api/category/", {params: queryParams});
+  /**
+   * Fetch pagable records
+   * @param actualPage
+   * @param orderBy
+   * @param order
+   * @returns {*}
+   */
+  fetch(actualPage, orderBy, order) {
+    const queryParams = {
+      page: actualPage,
+      size: 15,
+      sort: orderBy + "," + order,
     }
 
-    fetchAll() {
-        const queryParams = {
-            sort: "name,asc",
-        }
+    setupAuthentication();
+    return axios.get("/api/category/", {params: queryParams});
+  }
 
-        setupAuthentication();
-        return axios.get("/api/category/", {params: queryParams});
+  /**
+   * Fetch all records
+   * @returns {*}
+   */
+  fetchAll() {
+    const queryParams = {
+      sort: "name,asc",
     }
 
-    add(category){
-        const queryParams = {
-            name: category
-        }
-        setupAuthentication();
-        return axios.post("/api/category/", queryParams);
-    }
+    setupAuthentication();
+    return axios.get("/api/category/", {params: queryParams});
+  }
 
-    delete(categoryId) {
-        setupAuthentication();
-        return axios.delete("/api/category/"+categoryId);
+  /**
+   * Store record
+   * @param category
+   * @returns {*}
+   */
+  add(category) {
+    const queryParams = {
+      name: category
     }
+    setupAuthentication();
+    return axios.post("/api/category/", queryParams);
+  }
 
-    get(categoryId) {
-        setupAuthentication();
-        return axios.get("/api/category/"+categoryId);
-    }
+  /**
+   * Delete record
+   * @param categoryId
+   * @returns {Q.Promise<*>|void|Promise<AxiosResponse<*>>|boolean|Promise<boolean>|IDBRequest<undefined>|Q.Promise<any>|Promise<AxiosResponse<any>>|Promise<boolean>|IDBRequest<undefined>}
+   */
+  delete(categoryId) {
+    setupAuthentication();
+    return axios.delete("/api/category/" + categoryId);
+  }
 
-    update(categoryId, name){
-        const queryParams = {
-            name: name
-        }
-        setupAuthentication();
-        return axios.put("/api/category/"+categoryId, queryParams);
+  /**
+   * Get one records
+   * @param categoryId
+   * @returns {*}
+   */
+  get(categoryId) {
+    setupAuthentication();
+    return axios.get("/api/category/" + categoryId);
+  }
+
+  /**
+   * Update record
+   * @param categoryId
+   * @param name
+   * @returns {void | Promise<AxiosResponse<any>> | IDBRequest<IDBValidKey> | Promise<void>}
+   */
+  update(categoryId, name) {
+    const queryParams = {
+      name: name
     }
+    setupAuthentication();
+    return axios.put("/api/category/" + categoryId, queryParams);
+  }
 }
 
 export default new CategoryService();

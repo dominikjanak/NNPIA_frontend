@@ -1,0 +1,292 @@
+/*******************************************************/
+/* SWITCH */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 57px;
+    height: 32px;
+    margin: 0;
+}
+
+.switch.xsmall {
+    width: 37px;
+    height: 21px;
+}
+
+.switch.small {
+    width: 46px;
+    height: 26px;
+}
+
+.switch.big {
+    width: 70px;
+    height: 40px;
+}
+
+.switch.xbig {
+    width: 90px;
+    height: 50px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.switch.danger .slider {
+    background-color: #DC463C;
+}
+
+.switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.switch.xsmall .slider:before {
+    height: 15px;
+    width: 15px;
+    left: 3px;
+    bottom: 3px;
+}
+
+.switch.small .slider:before {
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+}
+
+.switch.big .slider:before {
+    height: 30px;
+    width: 30px;
+    left: 5px;
+    bottom: 5px;
+}
+
+.switch.xbig .slider:before {
+    height: 38px;
+    width: 38px;
+    left: 6px;
+    bottom: 6px;
+}
+
+.switch input:checked + .slider {
+    background-color: #00A03C;
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px #00A03C;
+}
+
+.switch input:checked + .slider:before {
+    -webkit-transform: translateX(25px);
+    -ms-transform: translateX(25px);
+    transform: translateX(25px);
+}
+
+.switch.xsmall input:checked + .slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+}
+
+.switch.small input:checked + .slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+}
+
+.switch.big input:checked + .slider:before {
+    -webkit-transform: translateX(30px);
+    -ms-transform: translateX(30px);
+    transform: translateX(30px);
+}
+
+.switch.xbig input:checked + .slider:before {
+    -webkit-transform: translateX(40px);
+    -ms-transform: translateX(40px);
+    transform: translateX(40px);
+}
+
+.switch.round .slider {
+    border-radius: 100px;
+}
+
+.switch.round .slider:before {
+    border-radius: 50%;
+}
+
+.switch ~ .form-check-label {
+    padding-left: 5px;
+    position: relative;
+    top: 2px;
+    font-size: 17px;
+    line-height: 15px;
+}
+
+.switch.xsmall ~ .form-check-label {
+    top: -3px;
+    font-size: 14px;
+}
+
+.switch.small ~ .form-check-label {
+    top: 1px;
+    font-size: 16px;
+}
+
+.switch.big ~ .form-check-label {
+    top: 7px;
+    font-size: 19px;
+}
+
+.switch.xbig ~ .form-check-label {
+    top: 13px;
+    font-size: 22px;
+}
+
+/*******************************************************/
+/* RADIO */
+.radio {
+    display: inline-block;
+    position: relative;
+    padding-left: 37px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.radio-xsmall .radio {
+    padding-left: 25px;
+}
+
+.radio-small .radio {
+    padding-left: 31px;
+}
+
+.radio-big .radio {
+    padding-left: 43px;
+}
+
+.radio-xbig .radio {
+    padding-left: 49px;
+}
+
+.radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.radio input:checked ~ .checkmark {
+    background-color: #e5e5e5;
+}
+
+.radio .checkmark {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background-color: #e0e0e0;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+}
+
+.radio-xsmall .radio .checkmark {
+    height: 18px;
+    width: 18px;
+}
+
+.radio-small .radio .checkmark {
+    height: 24px;
+    width: 24px;
+}
+
+.radio-big .radio .checkmark {
+    height: 36px;
+    width: 36px;
+}
+
+.radio-xbig .radio .checkmark {
+    height: 42px;
+    width: 42px;
+}
+
+.radio input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.radio .checkmark:after {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 17px;
+    height: 17px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background: #57b846;
+}
+
+.radio-xsmall .radio .checkmark:after {
+    width: 9px;
+    height: 9px;
+}
+
+.radio-small .radio .checkmark:after {
+    width: 13px;
+    height: 13px;
+}
+
+.radio-big .radio .checkmark:after {
+    width: 21px;
+    height: 21px;
+}
+
+.radio-xbig .radio .checkmark:after {
+    width: 25px;
+    height: 25px;
+}
+
+.radio .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}

@@ -1,15 +1,24 @@
-import axios, { setupAuthentication } from "../config/axios";
+import axios, {setupAuthentication} from "../config/axios";
 
+/**
+ * Rating service
+ */
 class RatingService {
-    rateQuote(quoteId, score) {
+  /**
+   * Store quote rating
+   * @param quoteId
+   * @param score
+   * @returns {*}
+   */
+  rateQuote(quoteId, score) {
 
-        const queryParams = {
-            quoteId: quoteId,
-            score: score
-        }
-        setupAuthentication();
-        return axios.post("/api/rating/", queryParams);
+    const queryParams = {
+      quoteId: quoteId,
+      score: score
     }
+    setupAuthentication();
+    return axios.post("/api/rating/", queryParams);
+  }
 }
 
 export default new RatingService();

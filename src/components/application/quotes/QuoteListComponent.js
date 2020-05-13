@@ -84,15 +84,13 @@ class QuoteListComponent extends React.Component {
         );
   }
 
-  handleOrderChange(orderBy, order) {
+  handleOrderChange = (orderBy, order) =>
     this.setState({orderBy: orderBy, order: order}, this.reloadQuoteList);
-  }
 
-  handlePageChange(pageNumber) {
+  handlePageChange = (pageNumber) =>
     this.setState({page: pageNumber}, this.reloadQuoteList);
-  }
 
-  handleQuoteRating(rating, id){
+  handleQuoteRating = (rating, id) => {
     RatingService.rateQuote(id, rating).then((res) =>{
       if(res.data.status !== 200 || res.data.status_key !== "SUCCESS") {
         PopupMessagesService.error("Hodnocení nebylo možné uložit!");
@@ -100,7 +98,7 @@ class QuoteListComponent extends React.Component {
     });
   }
 
-  handleDeleteQuote(id){
+  handleDeleteQuote = (id) =>{
     PopupMessagesService.confirm("Opravdu chcete tento citát smazat?").then((res) => {
       if (res.value) {
         QuoteService.delete(id).then((res) => {

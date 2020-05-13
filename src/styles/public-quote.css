@@ -1,0 +1,15 @@
+
+.public-quote .quote {
+    font-size: 45px;
+    line-height: 55px;
+    font-weight: lighter;
+}
+
+.public-quote .author{
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.public-quote .badge {
+    font-size: 19px
+}

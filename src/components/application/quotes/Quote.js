@@ -15,7 +15,7 @@ const Quote = ({data, removeHandler, ratingHandler}) => {
               <span className="badge badge-secondary" key={item.id}>{item.name}</span>
             ))}
           </div>
-          <QuoteTools quoteId={data.id} user={data.user.username} removeHandler={removeHandler} />
+          <QuoteTools quoteId={data.id} global={data.global} user={data.user.username} removeHandler={removeHandler} />
         </div>
         <div className="quote text-center mb-3">&bdquo;{data.quote}&ldquo;</div>
         <div className="author float-right">{data.author.firstname} {data.author.surname} [{data.author.country}]</div>

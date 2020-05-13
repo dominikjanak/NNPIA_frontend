@@ -1,11 +1,14 @@
 import React from "react";
 import Select from 'react-select';
 
+/**
+ * Order component
+ */
 export class OrderComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state ={
+    this.state = {
       orderby: props.options.length > 0 ? props.options[0].value : null,
       order: 'asc',
       oOptions: [
@@ -13,15 +16,7 @@ export class OrderComponent extends React.Component {
         {value: "desc", label: "Sestupně"}
       ]
     }
-
     this.onSubmitFilter = this.onSubmitFilter.bind(this);
-  }
-
-  onSubmitFilter = () =>
-    this.props.handler(this.state.orderby, this.state.order);
-
-  onChange = (e, a) =>{
-    this.setState({[a.name]: e.value });
   }
 
   render() {
@@ -47,5 +42,12 @@ export class OrderComponent extends React.Component {
         <span className="btn btn-success" onClick={this.onSubmitFilter}><i className="fas fa-save"/></span>
       </div>
     )
+  }
+
+  onSubmitFilter = () =>
+    this.props.handler(this.state.orderby, this.state.order);
+
+  onChange = (e, a) => {
+    this.setState({[a.name]: e.value});
   }
 }

@@ -7,15 +7,8 @@ import Pagination from "react-js-pagination";
 import Author from "./Author";
 import {Link} from "react-router-dom";
 import {OrderComponent} from "../../system/OrderComponent";
-import Category from "../category/Category";
 
 class QuoteListComponent extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleOrderChange = this.handleOrderChange.bind(this);
-  }
-
   state = {
     page: 1,
     totalPages: 1,
@@ -31,81 +24,86 @@ class QuoteListComponent extends React.Component {
     ]
   }
 
+  constructor(props) {
+    super(props);
+
+    this.handleOrderChange = this.handleOrderChange.bind(this);
+  }
+
   componentDidMount() {
     document.title = "Seznam autorů | Citáty";
     this.reloadAuthorList();
   }
 
   reloadAuthorList() {
-    AuthorService.fetch(this.state.page-1, this.state.orderBy, this.state.order).then((res) => {
-      if(res.data.status === 200) {
+    AuthorService.fetch(this.state.page - 1, this.state.orderBy, this.state.order).then((res) => {
+      if (res.data.status === 200) {
         let data = res.data.result;
-        this.setState({authors: data.content, totalAuthors: data.totalElements, totalPages: data.totalPages })
-      }
-      else{
+        this.setState({authors: data.content, totalAuthors: data.totalElements, totalPages: data.totalPages})
+      } else {
         PopupMessagesService.error("Data se nepodařilo načíst");
       }
     });
   }
 
 
-    render() {
-        return (
-            <React.Fragment>
-                <ApplicationLayout pageTitle={this.props.pageTitle}>
-                  <div className="mt-3">
-                    <div className="btn-group">
-                      <Link className="btn btn-success mr-2" to="/app/author/new"><i className="fas fa-plus"/> Nový autor</Link>
-                    </div>
-                    <OrderComponent handler={this.handleOrderChange} options={this.state.orderOptions} />
-                  </div>
+  render() {
+    return (
+      <React.Fragment>
+        <ApplicationLayout pageTitle={this.props.pageTitle}>
+          <div className="mt-3">
+            <div className="btn-group">
+              <Link className="btn btn-success mr-2" to="/app/author/new"><i className="fas fa-plus"/> Nový autor</Link>
+            </div>
+            <OrderComponent handler={this.handleOrderChange} options={this.state.orderOptions}/>
+          </div>
 
-                  <table className="table table-striped author-content">
-                    <thead>
-                    <tr>
-                      <th scope="col" style={{width: "50px"}}>#</th>
-                      <th scope="col">Jméno</th>
-                      <th scope="col">Příjmení</th>
-                      <th scope="col">Země</th>
-                      <th scope="col" style={{width: "100px"}}>Akce</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.state.authors.length > 0 ?(
-                      this.state.authors.map((item, index) => (
-                          <Author data={item} numering={(this.state.page - 1)*25+index + 1} key={item.id} removeHandler={this.handleRemoveAuthor} />
-                        ))
-                    ): (
-                      <tr>
-                        <td colSpan="5" className="text-center">To je nemilé, nic zde není!</td>
-                      </tr>
-                    )}
-                    </tbody>
-                  </table>
+          <table className="table table-striped author-content">
+            <thead>
+            <tr>
+              <th scope="col" style={{width: "50px"}}>#</th>
+              <th scope="col">Jméno</th>
+              <th scope="col">Příjmení</th>
+              <th scope="col">Země</th>
+              <th scope="col" style={{width: "100px"}}>Akce</th>
+            </tr>
+            </thead>
+            <tbody>
+            {this.state.authors.length > 0 ? (
+              this.state.authors.map((item, index) => (
+                <Author data={item} numering={(this.state.page - 1) * 25 + index + 1} key={item.id}
+                        removeHandler={this.handleRemoveAuthor}/>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center">To je nemilé, nic zde není!</td>
+              </tr>
+            )}
+            </tbody>
+          </table>
 
-                  <Pagination
-                    innerClass="pagination justify-content-end"
-                    activePage={this.state.page}
-                    itemsCountPerPage={15}
-                    totalItemsCount={this.state.totalAuthors}
-                    onChange={this.handlePageChange.bind(this)}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                    hideNavigation={true}
-                  />
-                </ApplicationLayout>
-            </React.Fragment>
-        );
-    }
+          <Pagination
+            innerClass="pagination justify-content-end"
+            activePage={this.state.page}
+            itemsCountPerPage={15}
+            totalItemsCount={this.state.totalAuthors}
+            onChange={this.handlePageChange.bind(this)}
+            itemClass="page-item"
+            linkClass="page-link"
+            hideNavigation={true}
+          />
+        </ApplicationLayout>
+      </React.Fragment>
+    );
+  }
 
   handleRemoveAuthor = (id) => {
     PopupMessagesService.confirm("Opravdu chcete tohoto autora smazat?").then((res) => {
       if (res.value) {
         AuthorService.delete(id).then((res) => {
-          if(res.data.status === 200 && res.data.status_key === "SUCCESS") {
+          if (res.data.status === 200 && res.data.status_key === "SUCCESS") {
             this.reloadAuthorList();
-          }
-          else{
+          } else {
             PopupMessagesService.error("Citát se nepodařilo odstranit!");
           }
         });

@@ -1,54 +1,78 @@
 import Swal from 'sweetalert2'
 
+/**
+ * PopupMessages service
+ */
 class PopupMessagesService {
 
-    success(message){
-        Swal.fire({
-            icon: 'success',
-            title: 'Yippee...',
-            text: message,
-            timer: 750
-        })
-    }
+  /**
+   * Success alert
+   * @param message
+   */
+  success(message) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Yippee...',
+      text: message,
+      timer: 750
+    })
+  }
 
-    info(message){
-        Swal.fire({
-            icon: 'info',
-            title: 'Yippee...',
-            text: message,
-            timer: 3000
-        })
-    }
+  /**
+   * info alert
+   * @param message
+   */
+  info(message) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Yippee...',
+      text: message,
+      timer: 3000
+    })
+  }
 
-    error(message){
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            html: message
-        })
-    }
+  /**
+   * Error alert
+   * @param message
+   */
+  error(message) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      html: message
+    })
+  }
 
-    warn(message){
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops...',
-        text: message,
-        timer: 4000
-      })
-    }
+  /**
+   * Warn alert
+   * @param message
+   */
+  warn(message) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Oops...',
+      text: message,
+      timer: 4000
+    })
+  }
 
-    confirm(message){
-        return Swal.fire({
-            title: 'Jste si jistí?',
-            text: message,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#408b2d',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ano',
-            cancelButtonText: 'Ne'
-        })
-    }
+  /**
+   * Confirm dialog
+   * @param message
+   * @returns {Promise<SweetAlertResult>}
+   */
+  confirm(message) {
+    return Swal.fire({
+      title: 'Jste si jistí?',
+      text: message,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#408b2d',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ano',
+      cancelButtonText: 'Ne'
+    })
+  }
 }
 
 export default new PopupMessagesService();

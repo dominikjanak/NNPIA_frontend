@@ -18,11 +18,12 @@ class QuoteFormComponent extends React.Component {
       quoteId: props.match.params.id,
       selectedAuthor: null,
       quote: "",
+      publicState: false,
       selectedCategories: [],
       authors: [],
       categories: []
     }
-
+    this.checkbox = React.createRef();
     this.handleAddMore = this.handleAddMore.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
   }
@@ -48,8 +49,10 @@ class QuoteFormComponent extends React.Component {
             categories.push({value: e.id, label: e.name})
           });
 
+          this.checkbox.current.checked = res.data.result.global;
           this.setState({
             quote: res.data.result.quote,
+            publicState: res.data.result.global,
             selectedAuthor: {value: res.data.result.author.id, label: `${res.data.result.author.firstname} ${res.data.result.author.surname} (${res.data.result.author.country})`},
             selectedCategories: categories
           })
@@ -64,7 +67,6 @@ class QuoteFormComponent extends React.Component {
 
   loadAuthors() {
     AuthorService.fetchAll().then((res)=>{
-      console.log(res.data)
       if(res.data.status === 200) {
         let data = res.data.result.content;
         const options = [];
@@ -83,8 +85,6 @@ class QuoteFormComponent extends React.Component {
   loadCategories() {
     CategoryService.fetchAll().then((res)=>{
       if(res.data.status === 200) {
-        console.log(res.data)
-
         let data = res.data.result.content;
         const options = [];
         data.forEach(e =>{
@@ -119,13 +119,25 @@ class QuoteFormComponent extends React.Component {
                 }
                   </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="inputAddress">Citát</label>
-                <textarea className="form-control" placeholder="Zadejte citát" name="quote" value={this.state.quote} onChange={this.onChange}/>
+              <div className="form-row">
+                <div className="form-group col-md-11">
+                  <div className="form-group">
+                    <label htmlFor="quote">Citát</label>
+                    <textarea className="form-control" placeholder="Zadejte citát" name="quote" value={this.state.quote} onChange={this.onChange}/>
+                  </div>
+                </div>
+                <div className="form-group col-md-1">
+
+                  <label htmlFor="inputAddress">Veřejný</label><br/>
+                  <label className="switch danger round mt-3" title="Veřejně přístupný">
+                    <input type="checkbox" onChange={this.handleQuoteGlobal} ref={this.checkbox}/>
+                    <div className="slider"/>
+                  </label>
+                </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-7">
-                  <label htmlFor="inputCity">Kategorie</label>
+                  <label>Kategorie</label>
                   <CreatableSelect
                     value={this.state.selectedCategories}
                     closeMenuOnSelect={false}
@@ -141,7 +153,7 @@ class QuoteFormComponent extends React.Component {
                   <small className="form-text text-muted"><span className="text-danger">*</span>Novou kategorii můžete vytvořit i zde.</small>
                 </div>
                 <div className="form-group col-md-5">
-                  <label htmlFor="inputState">Autor</label>
+                  <label>Autor</label>
                   <CreatableSelect
                     value={this.state.selectedAuthor}
                     options={this.state.authors}
@@ -160,6 +172,11 @@ class QuoteFormComponent extends React.Component {
         );
   }
 
+  handleQuoteGlobal = (e) => {
+    this.setState({publicState: e.target.checked})
+  }
+
+
   handleAddMore(){
     this.handleAddQuote(false);
   }
@@ -171,8 +188,7 @@ class QuoteFormComponent extends React.Component {
   handleSaveChanges = e => {
     if(!this.validateQuotesData()) return;
 
-    QuoteService.update(this.state.quoteId, this.state.selectedAuthor.value, this.state.quote.trim(), this.getCateoriesList()).then((res) => {
-      console.log(res.data);
+    QuoteService.update(this.state.quoteId, this.state.selectedAuthor.value, this.state.quote.trim(), this.getCateoriesList(), this.state.publicState).then((res) => {
       if(res.data.status === 200) {
         if(res.data.status_key === "SUCCESS"){
           this.props.history.push("/app");
@@ -219,10 +235,10 @@ class QuoteFormComponent extends React.Component {
   }
 
   addQuote(redirect){
-    QuoteService.add(this.state.selectedAuthor.value, this.state.quote.trim(), this.getCateoriesList()).then((res) => {
+    QuoteService.add(this.state.selectedAuthor.value, this.state.quote.trim(), this.getCateoriesList(), this.state.publicState).then((res) => {
       let clear = true;
+
       if(res.data.status === 200) {
-        console.log(res.data);
         if(res.data.status_key === "SUCCESS"){
           PopupMessagesService.success("Citát byl uložen.");
         }
