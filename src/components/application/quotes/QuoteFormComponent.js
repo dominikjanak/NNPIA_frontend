@@ -62,9 +62,10 @@ class QuoteFormComponent extends React.Component {
   }
 
   loadAuthors() {
-    AuthorService.fetch().then((res)=>{
+    AuthorService.fetchAll().then((res)=>{
+      console.log(res.data)
       if(res.data.status === 200) {
-        let data = res.data.result;
+        let data = res.data.result.content;
         const options = [];
         data.forEach(e =>{
           options.push({ value: e.id, label: e.firstname + " " + e.surname + " ("+ e.country +")" });
@@ -79,11 +80,12 @@ class QuoteFormComponent extends React.Component {
   }
 
   loadCategories() {
-    CategoryService.getCategories().then((res)=>{
+    CategoryService.fetchAll().then((res)=>{
       if(res.data.status === 200) {
-        let data = res.data.result;
-        const options = [];
+        console.log(res.data)
 
+        let data = res.data.result.content;
+        const options = [];
         data.forEach(e =>{
           options.push({ value: e.id, label: e.name });
         });
@@ -186,18 +188,6 @@ class QuoteFormComponent extends React.Component {
       PopupMessagesService.warn("Vyberte autora citátu!");
       return false;
     }
-/*
-    if(this.state.selectedCategories == null || this.state.selectedCategories.length <= 0) {
-      PopupMessagesService.confirm("Opravdu chcete pridat citát bez kategorií?").then((res) => {
-        if (res.value) {
-          return true;
-        }
-      });
-    }
-    else{
-      return true;
-    }*/
-
     return true;
   }
 

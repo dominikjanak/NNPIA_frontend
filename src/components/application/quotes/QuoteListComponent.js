@@ -9,7 +9,7 @@ import Quote from "./Quote";
 import RatingService from "../../../service/RatingService";
 import {Link} from "react-router-dom";
 
-class QuotesComponent extends React.Component {
+class QuoteListComponent extends React.Component {
   constructor() {
     super();
     this.handleDeleteQuote = this.handleDeleteQuote.bind(this);
@@ -113,4 +113,4 @@ class QuotesComponent extends React.Component {
 
 }
 
-export default QuotesComponent;
+export default QuoteListComponent;
