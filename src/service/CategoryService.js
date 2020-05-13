@@ -4,7 +4,7 @@ class CategoryService {
     fetch(actualPage, orderBy, order) {
         const queryParams = {
             page: actualPage,
-            size: 25,
+            size: 15,
             sort: orderBy+","+order,
         }
 

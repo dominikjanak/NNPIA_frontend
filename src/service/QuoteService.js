@@ -4,7 +4,7 @@ class QuoteService {
     fetch(actualPage, orderBy, order) {
         const queryParams = {
             page: actualPage,
-            size: 25,
+            size: 10,
             sort: orderBy+","+order,
         }
         setupAuthentication();

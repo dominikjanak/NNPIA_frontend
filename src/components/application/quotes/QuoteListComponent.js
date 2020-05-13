@@ -72,7 +72,7 @@ class QuoteListComponent extends React.Component {
             <Pagination
               innerClass="pagination justify-content-end"
               activePage={this.state.page}
-              itemsCountPerPage={25}
+              itemsCountPerPage={10}
               totalItemsCount={this.state.totalQuotes}
               onChange={this.handlePageChange.bind(this)}
               itemClass="page-item"

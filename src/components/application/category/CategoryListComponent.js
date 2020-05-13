@@ -80,7 +80,7 @@ class CategoryListComponent extends React.Component {
                   <Pagination
                     innerClass="pagination justify-content-end"
                     activePage={this.state.page}
-                    itemsCountPerPage={25}
+                    itemsCountPerPage={15}
                     totalItemsCount={this.state.totalCategories}
                     onChange={this.handlePageChange.bind(this)}
                     itemClass="page-item"
