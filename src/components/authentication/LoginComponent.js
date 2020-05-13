@@ -3,6 +3,7 @@ import '../../styles/login.css';
 import SessionService from "../../service/SessionService.js";
 import PopupMessagesService from "../../service/PopupMessagesService.js";
 import {Link, withRouter} from "react-router-dom";
+import Loader from "react-loader";
 
 /**
  * Login component
@@ -12,7 +13,8 @@ class LoginComponent extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      loader: true
     }
   }
 
@@ -42,6 +44,26 @@ class LoginComponent extends React.Component {
                   <input type="password" className="form-control" name="password" required placeholder="Zadejte heslo"
                          value={this.state.password} onChange={this.onChange}/>
                 </div>
+                <Loader
+                  loaded={this.state.loader}
+                  lines={13}
+                  length={20}
+                  width={10}
+                  radius={30}
+                  corners={1}
+                  rotate={0}
+                  direction={1}
+                  color="#000"
+                  speed={1}
+                  trail={60}
+                  shadow={false}
+                  hwaccel={false}
+                  className="spinner"
+                  zIndex={2e9}
+                  top="50%"
+                  left="50%"
+                  scale={1.0}
+                />
                 <input type="submit" className="btn w-100 btn-primary" value="Přihlásit se"/>
                 <Link className="btn w-100 mt-2 btn-link text-center" to="/register">Zaregistrovat se</Link>
               </form>
@@ -84,7 +106,7 @@ class LoginComponent extends React.Component {
     if (this.state.username.length === 0 || this.state.password.length === 0) {
       return;
     }
-
+    this.setState({loader: !this.state.loader});
     SessionService.login(this.state.username, this.state.password).then(res => {
       if (res.data.status === 200) {
         SessionService.setUserInfo(res.data.result);
