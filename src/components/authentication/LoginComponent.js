@@ -3,7 +3,6 @@ import '../../styles/login.css';
 import SessionService from "../../service/SessionService.js";
 import PopupMessagesService from "../../service/PopupMessagesService.js";
 import {Link, withRouter} from "react-router-dom";
-import PropTypes from "prop-types";
 
 /**
  * Login component
@@ -78,7 +77,7 @@ class LoginComponent extends React.Component {
     );
   }
 
-  // process form submit
+  // process login
   handleSubmit = (e) => {
     e.preventDefault();
 

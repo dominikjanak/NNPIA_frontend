@@ -15,10 +15,6 @@ export class QuoteTools extends React.Component {
     }
   }
 
-  canShow() {
-    return this.props.user === SessionService.getUsername();
-  }
-
   render() {
     if (!this.canShow() && this.state.showState === false) {
       return null;
@@ -26,7 +22,6 @@ export class QuoteTools extends React.Component {
 
     return (
       <div className="toolbox float-right text-right mb-1">
-
         {this.canShow() && (
           <label className="switch danger small round mr-1" title="Veřejně přístupný">
             {React.createElement('input', {
@@ -37,7 +32,6 @@ export class QuoteTools extends React.Component {
             <div className="slider"/>
           </label>
         )}
-
         <div className="btn-group" role="group">
           {this.canShow() && (
             <React.Fragment>
@@ -57,6 +51,11 @@ export class QuoteTools extends React.Component {
         </div>
       </div>
     )
+  }
+
+  // can show owner tools
+  canShow = () => {
+    return this.props.user === SessionService.getUsername()
   }
 
   // Save quote visibility

@@ -8,12 +8,12 @@ import SessionService from "../../service/SessionService.js";
  * @constructor
  */
 const Logout = () => {
-    document.title = "Odhlašování | Citáty";
+  document.title = "Odhlašování | Citáty";
 
-    if(SessionService.isLoggedIn()){
-        SessionService.logout();
-    }
-    return <Redirect to="/login"/>
+  if (SessionService.isLoggedIn()) {
+    SessionService.logout();
+  }
+  return <Redirect to="/login"/>
 }
 
 export default Logout;

@@ -41,7 +41,7 @@ function MainRouter() {
 
             {/** Show public quote **/}
             <Route exact path="/show/:id">
-              <PublicShowQuote />
+              <PublicShowQuote/>
             </Route>
 
             {/** Author managers **/}

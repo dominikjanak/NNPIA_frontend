@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import {QuoteTools} from "./QuoteTools";
 import StarRatings from "react-star-ratings";
 
+/**
+ * Quote render
+ */
 const Quote = ({data, removeHandler, ratingHandler}) => {
   const [rating, setRating] = useState(isNaN(data.score)? 0 : data.score)
   const [rated, setRated] = useState(data.uservoted)

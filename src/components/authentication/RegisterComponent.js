@@ -80,10 +80,7 @@ class RegisterComponent extends React.Component {
     );
   }
 
-  /**
-   * Procceed register
-   * @param e
-   */
+  // Process register
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -119,10 +116,6 @@ class RegisterComponent extends React.Component {
     });
   };
 
-  /**
-   * Dynamicaly change values
-   * @param e
-   */
   onChange = (e) =>
     this.setState({[e.target.name]: e.target.value});
 }

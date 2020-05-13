@@ -1,5 +1,8 @@
-import React  from 'react'
+import React from 'react'
 
+/**
+ * Footer render
+ */
 const Footer = () => {
   return (
     <footer className="footer mt-auto py-3">

@@ -8,24 +8,27 @@ import Author from "./Author";
 import {Link} from "react-router-dom";
 import {OrderComponent} from "../../system/OrderComponent";
 
+/**
+ * Quote list component
+ */
 class QuoteListComponent extends React.Component {
-  state = {
-    page: 1,
-    totalPages: 1,
-    totalAuthors: 0,
-    orderBy: 'id',
-    order: 'asc',
-    authors: [],
-    orderOptions: [
-      {value: "id", label: "Vložení"},
-      {value: "firstname", label: "Jméno autora"},
-      {value: "surname", label: "Příjmení autora"},
-      {value: "country", label: "Země autora"}
-    ]
-  }
-
   constructor(props) {
     super(props);
+
+    this.state = {
+      page: 1,
+      totalPages: 1,
+      totalAuthors: 0,
+      orderBy: 'id',
+      order: 'asc',
+      authors: [],
+      orderOptions: [
+        {value: "id", label: "Vložení"},
+        {value: "firstname", label: "Jméno autora"},
+        {value: "surname", label: "Příjmení autora"},
+        {value: "country", label: "Země autora"}
+      ]
+    }
 
     this.handleOrderChange = this.handleOrderChange.bind(this);
   }
@@ -34,18 +37,6 @@ class QuoteListComponent extends React.Component {
     document.title = "Seznam autorů | Citáty";
     this.reloadAuthorList();
   }
-
-  reloadAuthorList() {
-    AuthorService.fetch(this.state.page - 1, this.state.orderBy, this.state.order).then((res) => {
-      if (res.data.status === 200) {
-        let data = res.data.result;
-        this.setState({authors: data.content, totalAuthors: data.totalElements, totalPages: data.totalPages})
-      } else {
-        PopupMessagesService.error("Data se nepodařilo načíst");
-      }
-    });
-  }
-
 
   render() {
     return (
@@ -97,6 +88,17 @@ class QuoteListComponent extends React.Component {
     );
   }
 
+  reloadAuthorList = () => {
+    AuthorService.fetch(this.state.page - 1, this.state.orderBy, this.state.order).then((res) => {
+      if (res.data.status === 200) {
+        let data = res.data.result;
+        this.setState({authors: data.content, totalAuthors: data.totalElements, totalPages: data.totalPages})
+      } else {
+        PopupMessagesService.error("Data se nepodařilo načíst");
+      }
+    });
+  }
+
   handleRemoveAuthor = (id) => {
     PopupMessagesService.confirm("Opravdu chcete tohoto autora smazat?").then((res) => {
       if (res.value) {
@@ -116,8 +118,6 @@ class QuoteListComponent extends React.Component {
 
   handleOrderChange = (orderBy, order) =>
     this.setState({orderBy: orderBy, order: order}, this.reloadAuthorList);
-
-
 }
 
 export default QuoteListComponent;
