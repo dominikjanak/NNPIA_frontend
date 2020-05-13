@@ -9,9 +9,13 @@ const instance = axios.create({
 instance.interceptors.response.use(function (response) {
   return response;
 }, function (rejected) {
+  try{
   if (rejected.response.status === 401) {
     SessionService.logout();
-    this.props.history.push("/logout");
+    window.location.href = '/logout';
+  }
+  } catch(error){
+    window.location.href = '/logout';
   }
   return Promise.reject(rejected);
 });

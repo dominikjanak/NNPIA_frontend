@@ -16,8 +16,8 @@ const NavBar = () => {
               <img src={QuoteLogo} alt="Quotes logo" />
             </Link>
             <Link className="py-2 pr-4" to="/app">Citáty</Link>
-            <Link className="py-2 pr-4" to="/app/categories">Kategorie</Link>
-            <Link className="py-2 pr-4" to="/app/authors">Autoři</Link>
+            <Link className="py-2 pr-4" to="/app/category">Kategorie</Link>
+            <Link className="py-2 pr-4" to="/app/author">Autoři</Link>
             <Link className="py-2" to="/logout">Odhlásit se ({SessionService.getUsername()
             })</Link>
 

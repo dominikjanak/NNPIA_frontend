@@ -11,8 +11,8 @@ import AuthorListComponent from "./application/author/AuthorListComponent";
 import CategoriesListComponent from "./application/CategoriesListComponent";
 import NavBar from "./application/layout/NavBar";
 import Footer from "./application/layout/Footer";
-import SessionService from "../service/SessionService";
 import PrivateRoute from "./PrivateRoute";
+import AuthorFormComponent from "./application/author/AuthorFormComponent";
 
 function MainRouter() {
   return (
@@ -31,24 +31,29 @@ function MainRouter() {
                 <Logout />
               </Route>
 
-              <PrivateRoute exact path="/app/quote/new">
-                <QuoteFormComponent pageTitle={"Vložit nový citát"} action="new" />
-              </PrivateRoute>
-
-              <PrivateRoute exact path="/app/quote/edit/:id">
-                <QuoteFormComponent pageTitle={"Upravit citát"} action="edit" />
-              </PrivateRoute>
-
-              <PrivateRoute exact path="/app/authors">
+              <PrivateRoute exact path="/app/author">
                 <AuthorListComponent pageTitle={"Seznam autorů"} />
               </PrivateRoute>
+              <PrivateRoute exact path="/app/author/new">
+                <AuthorFormComponent pageTitle={"Vložit nový citát"} action="new" />
+              </PrivateRoute>
+              <PrivateRoute exact path="/app/author/edit/:id">
+                <AuthorFormComponent pageTitle={"Upravit citát"} action="edit" />
+              </PrivateRoute>
 
-              <PrivateRoute exact path="/app/categories">
+
+              <PrivateRoute exact path="/app/category">
                 <CategoriesListComponent pageTitle={"Sezman kategorií"} />
               </PrivateRoute>
 
               <PrivateRoute exact path="/app">
                 <QuoteComponent pageTitle={"Výpis všech citátů"} />
+              </PrivateRoute>
+              <PrivateRoute exact path="/app/quote/new">
+                <QuoteFormComponent pageTitle={"Vložit nový citát"} action="new" />
+              </PrivateRoute>
+              <PrivateRoute exact path="/app/quote/edit/:id">
+                <QuoteFormComponent pageTitle={"Upravit citát"} action="edit" />
               </PrivateRoute>
 
               <Route path="/" exact>

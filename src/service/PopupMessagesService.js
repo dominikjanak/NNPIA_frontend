@@ -7,7 +7,7 @@ class PopupMessagesService {
             icon: 'success',
             title: 'Yippee...',
             text: message,
-            timer: 1000
+            timer: 750
         })
     }
 

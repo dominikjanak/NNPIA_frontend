@@ -38,7 +38,6 @@ class QuoteService {
             global: true,
             categories: categories
         }
-        console.log(queryParams);
         setupAuthentication();
         return axios.put("/api/quote/"+quoteId, queryParams);
     }
