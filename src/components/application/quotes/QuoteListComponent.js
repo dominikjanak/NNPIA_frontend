@@ -8,6 +8,7 @@ import {OrderComponent} from "../../system/OrderComponent";
 import Quote from "./Quote";
 import RatingService from "../../../service/RatingService";
 import {Link} from "react-router-dom";
+import { animateScroll as Scroll } from 'react-scroll';
 
 /**
  * Quote list component
@@ -83,6 +84,7 @@ class QuoteListComponent extends React.Component {
         PopupMessagesService.error("Data se nepodařilo načíst");
       }
     });
+    Scroll.scrollToTop();
   }
 
   handleQuoteRating = (rating, id) => {

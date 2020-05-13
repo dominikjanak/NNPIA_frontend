@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import Author from "./Author";
 import {Link} from "react-router-dom";
 import {OrderComponent} from "../../system/OrderComponent";
+import { animateScroll as Scroll } from 'react-scroll';
 
 /**
  * Quote list component
@@ -97,6 +98,7 @@ class QuoteListComponent extends React.Component {
         PopupMessagesService.error("Data se nepodařilo načíst");
       }
     });
+    Scroll.scrollToTop();
   }
 
   handleRemoveAuthor = (id) => {

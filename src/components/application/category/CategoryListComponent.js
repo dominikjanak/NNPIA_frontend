@@ -7,6 +7,7 @@ import Category from "./Category";
 import {Link} from "react-router-dom";
 import {OrderComponent} from "../../system/OrderComponent";
 import CategoryService from "../../../service/CategoryService";
+import { animateScroll as Scroll } from 'react-scroll';
 
 /**
  * Category list component
@@ -92,6 +93,7 @@ class CategoryListComponent extends React.Component {
         PopupMessagesService.error("Data se nepodařilo načíst");
       }
     });
+    Scroll.scrollToTop();
   }
 
   handleRemoveAuthor = (id) => {
