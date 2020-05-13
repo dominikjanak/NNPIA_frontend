@@ -2,7 +2,7 @@ import * as React from 'react';
 import '../../styles/login.css';
 import SessionService from "../../service/SessionService.js";
 import PopupMessagesService from "../../service/PopupMessagesService.js";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 class LoginComponent extends React.Component {
@@ -93,7 +93,7 @@ class LoginComponent extends React.Component {
     }
 }
 
-export default LoginComponent;
+export default withRouter(LoginComponent);
 
 LoginComponent.propTypes = {
     username: PropTypes.string,

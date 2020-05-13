@@ -1,58 +1,53 @@
+import Swal from 'sweetalert2'
+
 class PopupMessagesService {
-    info(message){
-        // eslint-disable-next-line no-undef
-        $("body").overhang({
-            type: "info",
-            message: message,
-            duration: 4,
-            closeConfirm: true
-        });
-    }
-    error(message){
-        // eslint-disable-next-line no-undef
-        $("body").overhang({
-            type: "error",
-            message: message,
-            duration: 4,
-            closeConfirm: true
-        });
-    }
-    warn(message){
-        // eslint-disable-next-line no-undef
-        $("body").overhang({
-            type: "warn",
-            message: message,
-            duration: 4,
-            closeConfirm: true
-        });
-    }
+
     success(message){
-        // eslint-disable-next-line no-undef
-        $("body").overhang({
-            type: "success",
-            message: message,
-            duration: 4,
-            closeConfirm: true
-        });
+        Swal.fire({
+            icon: 'success',
+            title: 'Yippee...',
+            text: message,
+            timer: 1000
+        })
     }
 
-    async prompt(message){
-        // eslint-disable-next-line no-undef
-        await  $("body").overhang({
-            type: "prompt",
-            message: message,
-            overlay: true
-        });
+    info(message){
+        Swal.fire({
+            icon: 'info',
+            title: 'Yippee...',
+            text: message,
+            timer: 3000
+        })
     }
 
-    async confirm(message, callbackFnc){
-        // eslint-disable-next-line no-undef
-        $("body").overhang({
-            type: "confirm",
-            message: message,
-            overlay: true,
-            callback: callbackFnc
-        });
+    error(message){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: message
+        })
+    }
+
+    warn(message){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: message,
+        timer: 4000
+      })
+    }
+
+    confirm(message){
+        return Swal.fire({
+            title: 'Are you sure?',
+            text: message,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#408b2d',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ano',
+            cancelButtonText: 'Ne'
+        })
     }
 }
 

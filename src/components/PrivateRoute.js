@@ -1,21 +1,18 @@
 import React from 'react';
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect} from "react-router-dom";
 import SessionService from "../service/SessionService";
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={ props =>
-      SessionService.isLoggedIn() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-          pathname: '/login',
-          state: { from: props.location }
-          }}
-        />
-      )
-    }
-  />
-);
+const PrivateRoute = ({ props, component: Component, ...rest }) => {
+  return (
+    SessionService.isLoggedIn() ? (
+      <Route {...rest} render={props => <Component {...props} /> } />
+    ):(
+      <Redirect to="/login"/>
+    )
+  )
+}
+
+export default PrivateRoute;
+
+
+

@@ -30,3 +30,7 @@
 .quote-item .categories .badge:not(:last-child) {
     margin-right:4px
 }
+
+.quote-item .rating span {
+    font-size: 14px;
+}
