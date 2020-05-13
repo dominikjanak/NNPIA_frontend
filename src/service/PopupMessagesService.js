@@ -24,7 +24,7 @@ class PopupMessagesService {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: message
+            html: message
         })
     }
 
@@ -39,7 +39,7 @@ class PopupMessagesService {
 
     confirm(message){
         return Swal.fire({
-            title: 'Are you sure?',
+            title: 'Jste si jistí?',
             text: message,
             icon: 'warning',
             showCancelButton: true,

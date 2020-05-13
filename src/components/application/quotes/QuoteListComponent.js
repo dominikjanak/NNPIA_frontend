@@ -56,16 +56,19 @@ class QuoteListComponent extends React.Component {
           <ApplicationLayout pageTitle={this.props.pageTitle}>
             <div className="mt-3">
               <div className="btn-group">
-                <Link className="btn btn-success mr-2" to="/app/quote/new"><i className="fas fa-plus"/> Nový</Link>
+                <Link className="btn btn-success mr-2" to="/app/quote/new"><i className="fas fa-plus"/> Nový citát</Link>
               </div>
               <OrderComponent handler={this.handleOrderChange} options={this.state.orderOptions} />
             </div>
 
-
-            {this.state.quotes.map((item, index) => (
-              <Quote data={item} key={item.id} ratingHandler={this.handleQuoteRating} removeHandler={this.handleDeleteQuote} />
-            ))}
-
+            {this.state.quotes.length > 0 ?(
+              this.state.quotes.map((item, index) => (
+                <Quote data={item} key={item.id} ratingHandler={this.handleQuoteRating} removeHandler={this.handleDeleteQuote} />
+              ))
+            ):(
+              <div className="text-center rounded bg-gray-3 my-4 py-3 text-gray-7">To je nemilé, ale nic tu není!</div>
+            )}
+            <div>
             <Pagination
               innerClass="pagination justify-content-end"
               activePage={this.state.page}
@@ -76,6 +79,7 @@ class QuoteListComponent extends React.Component {
               linkClass="page-link"
               hideNavigation={true}
             />
+            </div>
           </ApplicationLayout>
         );
   }

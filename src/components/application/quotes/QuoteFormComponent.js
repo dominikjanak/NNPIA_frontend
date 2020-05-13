@@ -8,6 +8,7 @@ import CreatableSelect from 'react-select/creatable';
 import {withRouter} from 'react-router-dom';
 import {Link} from "react-router-dom";
 import QuoteService from "../../../service/QuoteService";
+import StarRatings from "react-star-ratings";
 
 class QuoteFormComponent extends React.Component {
   constructor(props) {
@@ -133,7 +134,11 @@ class QuoteFormComponent extends React.Component {
                     onChange={this.handleCategoryChange}
                     isSearchable
                     placeholder="Vyberte kategorie"
+                    createOptionPosition="first"
+                    formatCreateLabel={(inputValue) => `Vytvořit '${inputValue}'`}
+                    noOptionsMessage={() => "Žádné možnosti..."}
                   />
+                  <small className="form-text text-muted"><span className="text-danger">*</span>Novou kategorii můžete vytvořit i zde.</small>
                 </div>
                 <div className="form-group col-md-5">
                   <label htmlFor="inputState">Autor</label>
@@ -142,8 +147,12 @@ class QuoteFormComponent extends React.Component {
                     options={this.state.authors}
                     onChange={this.handleAuthorChange}
                     isSearchable
+                    createOptionPosition="first"
                     placeholder="Vyberte autora"
+                    formatCreateLabel={(inputValue) => `Vytvořit '${inputValue}'`}
+                    noOptionsMessage={() => "Žádné možnosti..."}
                   />
+                  <small className="form-text text-muted"><span className="text-danger">*</span> Nového autora můžete vytvořit ve formátu 'Jméno Příjmení (STS)'.</small>
                 </div>
               </div>
             </form>
@@ -181,6 +190,11 @@ class QuoteFormComponent extends React.Component {
   validateQuotesData(){
     if(this.state.quote.length < 15){
       PopupMessagesService.warn("Citát musí obsahovat alespoň 15 znaků!");
+      return false;
+    }
+
+    if(this.state.quote.length > 1000){
+      PopupMessagesService.warn("Citát může obsahovat maximálně 1000 znaků!");
       return false;
     }
 
@@ -247,11 +261,13 @@ class QuoteFormComponent extends React.Component {
                 PopupMessagesService.warn("Tento autor již existuje!");
               }
             } else {
-              PopupMessagesService.error("Nového autra se nepodařilo vytvořit!");
+
             }
           })
         }
         this.setState({ selectedAuthor });
+      } else {
+        PopupMessagesService.error("Nového autra se nepodařilo vytvořit!<br/>Musí být ve formátu 'Jméno Příjmení (Země)'<br/><small class='text-muted'>Popřípadě 'Jméno (Země)' nebo 'Jméno Příjmení Příjmení (Země)'</small><br/>Země může bsahvoat 1 až 3 znaky.");
       }
     }
   };
@@ -260,6 +276,10 @@ class QuoteFormComponent extends React.Component {
     if(selectedCategories != null && selectedCategories.length > 0){
       let last = selectedCategories[selectedCategories.length - 1];
       if(last.__isNew__ === true){
+        if(last.label.length > 50){
+          PopupMessagesService.error("Maximální povolená délka kategorie je 50 znaků.");
+          return;
+        }
         CategoryService.add(last.label).then((res)=>{
           if(res.data.status === 200) {
             if(res.data.status_key === "SUCCESS"){

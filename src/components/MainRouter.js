@@ -5,10 +5,11 @@ import LoginComponent from "./authentication/LoginComponent";
 import RegisterComponent from "./authentication/RegisterComponent";
 import PageNotFoundComponent from "./systemPages/PageNotFoundComponent";
 import Logout from "./authentication/Logout";
-import QuoteComponent from "./application/quotes/QuotesComponent";
+import QuoteListComponent from "./application/quotes/QuoteListComponent";
 import QuoteFormComponent from "./application/quotes/QuoteFormComponent";
 import AuthorListComponent from "./application/author/AuthorListComponent";
-import CategoriesListComponent from "./application/CategoriesListComponent";
+import CategoryListComponent from "./application/category/CategoryListComponent";
+import CategoryFormComponent from "./application/category/CategoryFormComponent";
 import NavBar from "./application/layout/NavBar";
 import Footer from "./application/layout/Footer";
 import PrivateRoute from "./PrivateRoute";
@@ -32,22 +33,28 @@ function MainRouter() {
               </Route>
 
               <PrivateRoute exact path="/app/author">
-                <AuthorListComponent pageTitle={"Seznam autorů"} />
+                <AuthorListComponent pageTitle={"Výpis všech autorů"} />
               </PrivateRoute>
               <PrivateRoute exact path="/app/author/new">
-                <AuthorFormComponent pageTitle={"Vložit nový citát"} action="new" />
+                <AuthorFormComponent pageTitle={"Vložit nového autora"} action="new" />
               </PrivateRoute>
               <PrivateRoute exact path="/app/author/edit/:id">
-                <AuthorFormComponent pageTitle={"Upravit citát"} action="edit" />
+                <AuthorFormComponent pageTitle={"Upravit autora"} action="edit" />
               </PrivateRoute>
 
 
               <PrivateRoute exact path="/app/category">
-                <CategoriesListComponent pageTitle={"Sezman kategorií"} />
+                <CategoryListComponent pageTitle={"Výpis všech kategorií"} />
+              </PrivateRoute>
+              <PrivateRoute exact path="/app/category/new">
+                <CategoryFormComponent pageTitle={"Vložit novou kategorii"} action="new" />
+              </PrivateRoute>
+              <PrivateRoute exact path="/app/category/edit/:id">
+                <CategoryFormComponent pageTitle={"Upravit kategorii"} action="edit" />
               </PrivateRoute>
 
               <PrivateRoute exact path="/app">
-                <QuoteComponent pageTitle={"Výpis všech citátů"} />
+                <QuoteListComponent pageTitle={"Výpis všech citátů"} />
               </PrivateRoute>
               <PrivateRoute exact path="/app/quote/new">
                 <QuoteFormComponent pageTitle={"Vložit nový citát"} action="new" />

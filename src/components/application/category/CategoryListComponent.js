@@ -1,15 +1,14 @@
 import * as React from 'react';
-import '../../../styles/authors.css';
+import '../../../styles/category.css';
 import ApplicationLayout from "../layout/ApplicationLayout";
 import PopupMessagesService from "../../../service/PopupMessagesService";
-import AuthorService from "../../../service/AuthorService";
 import Pagination from "react-js-pagination";
-import Author from "./Author";
+import Category from "./Category";
 import {Link} from "react-router-dom";
 import {OrderComponent} from "../../system/OrderComponent";
-import Category from "../category/Category";
+import CategoryService from "../../../service/CategoryService";
 
-class QuoteListComponent extends React.Component {
+class CategoryListComponent extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,28 +18,26 @@ class QuoteListComponent extends React.Component {
   state = {
     page: 1,
     totalPages: 1,
-    totalAuthors: 0,
+    totalCategories: 0,
     orderBy: 'id',
     order: 'asc',
-    authors: [],
+    categories: [],
     orderOptions: [
       {value: "id", label: "Vložení"},
-      {value: "firstname", label: "Jméno autora"},
-      {value: "surname", label: "Příjmení autora"},
-      {value: "country", label: "Země autora"}
+      {value: "name", label: "Název"}
     ]
   }
 
   componentDidMount() {
-    document.title = "Seznam autorů | Citáty";
-    this.reloadAuthorList();
+    document.title = "Seznam kategorií | Citáty";
+    this.reloadCategoryList();
   }
 
-  reloadAuthorList() {
-    AuthorService.fetch(this.state.page-1, this.state.orderBy, this.state.order).then((res) => {
+  reloadCategoryList() {
+    CategoryService.fetch(this.state.page-1, this.state.orderBy, this.state.order).then((res) => {
       if(res.data.status === 200) {
         let data = res.data.result;
-        this.setState({authors: data.content, totalAuthors: data.totalElements, totalPages: data.totalPages })
+        this.setState({categories: data.content, totalCategories: data.totalElements, totalPages: data.totalPages })
       }
       else{
         PopupMessagesService.error("Data se nepodařilo načíst");
@@ -48,36 +45,33 @@ class QuoteListComponent extends React.Component {
     });
   }
 
-
     render() {
         return (
             <React.Fragment>
                 <ApplicationLayout pageTitle={this.props.pageTitle}>
                   <div className="mt-3">
                     <div className="btn-group">
-                      <Link className="btn btn-success mr-2" to="/app/author/new"><i className="fas fa-plus"/> Nový autor</Link>
+                      <Link className="btn btn-success mr-2" to="/app/category/new"><i className="fas fa-plus"/> Nová kategorie</Link>
                     </div>
                     <OrderComponent handler={this.handleOrderChange} options={this.state.orderOptions} />
                   </div>
 
-                  <table className="table table-striped author-content">
+                  <table className="table table-striped category-content">
                     <thead>
                     <tr>
                       <th scope="col" style={{width: "50px"}}>#</th>
-                      <th scope="col">Jméno</th>
-                      <th scope="col">Příjmení</th>
-                      <th scope="col">Země</th>
+                      <th scope="col">Název</th>
                       <th scope="col" style={{width: "100px"}}>Akce</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {this.state.authors.length > 0 ?(
-                      this.state.authors.map((item, index) => (
-                          <Author data={item} numering={(this.state.page - 1)*25+index + 1} key={item.id} removeHandler={this.handleRemoveAuthor} />
-                        ))
+                    {this.state.categories.length > 0 ?(
+                      this.state.categories.map((item, index) => (
+                        <Category data={item} numering={(this.state.page - 1)*25+index + 1} key={item.id} removeHandler={this.handleRemoveAuthor} />
+                      ))
                     ): (
                       <tr>
-                        <td colSpan="5" className="text-center">To je nemilé, nic zde není!</td>
+                        <td colSpan="3" className="text-center">To je nemilé, nic zde není!</td>
                       </tr>
                     )}
                     </tbody>
@@ -87,7 +81,7 @@ class QuoteListComponent extends React.Component {
                     innerClass="pagination justify-content-end"
                     activePage={this.state.page}
                     itemsCountPerPage={25}
-                    totalItemsCount={this.state.totalAuthors}
+                    totalItemsCount={this.state.totalCategories}
                     onChange={this.handlePageChange.bind(this)}
                     itemClass="page-item"
                     linkClass="page-link"
@@ -99,14 +93,14 @@ class QuoteListComponent extends React.Component {
     }
 
   handleRemoveAuthor = (id) => {
-    PopupMessagesService.confirm("Opravdu chcete tohoto autora smazat?").then((res) => {
+    PopupMessagesService.confirm("Opravdu chcete tuto kategorii smazat?").then((res) => {
       if (res.value) {
-        AuthorService.delete(id).then((res) => {
+        CategoryService.delete(id).then((res) => {
           if(res.data.status === 200 && res.data.status_key === "SUCCESS") {
-            this.reloadAuthorList();
+            this.reloadCategoryList();
           }
           else{
-            PopupMessagesService.error("Citát se nepodařilo odstranit!");
+            PopupMessagesService.error("Kategorii se nepodařilo odstranit!");
           }
         });
       }
@@ -114,12 +108,11 @@ class QuoteListComponent extends React.Component {
   }
 
   handlePageChange = (pageNumber) =>
-    this.setState({page: pageNumber}, this.reloadAuthorList);
+    this.setState({page: pageNumber}, this.reloadCategoryList);
 
   handleOrderChange = (orderBy, order) =>
-    this.setState({orderBy: orderBy, order: order}, this.reloadAuthorList);
-
+    this.setState({orderBy: orderBy, order: order}, this.reloadCategoryList);
 
 }
 
-export default QuoteListComponent;
+export default CategoryListComponent;

@@ -1,13 +1,9 @@
 import * as React from 'react';
-import '../../../styles/quotes.css';
 import ApplicationLayout from "./../layout/ApplicationLayout";
 import PopupMessagesService from "../../../service/PopupMessagesService";
 import AuthorService from "../../../service/AuthorService";
-import CategoryService from "../../../service/CategoryService";
-import CreatableSelect from 'react-select/creatable';
 import {withRouter} from 'react-router-dom';
 import {Link} from "react-router-dom";
-import QuoteService from "../../../service/QuoteService";
 
 class AuthorFormComponent extends React.Component {
   constructor(props) {
@@ -72,15 +68,15 @@ class AuthorFormComponent extends React.Component {
               <div className="form-row">
                 <div className="form-group col-md-5">
                   <label htmlFor="inputCity">Jméno</label>
-                  <input type="text" class="form-control" name="firstname" onChange={this.onChange} value={this.state.firstname} />
+                  <input type="text" class="form-control" maxLength="50" name="firstname" onChange={this.onChange} value={this.state.firstname} />
                 </div>
                 <div className="form-group col-md-5">
                   <label htmlFor="inputCity">Příjmení</label>
-                  <input type="text" className="form-control" name="surname" onChange={this.onChange} value={this.state.surname}/>
+                  <input type="text" className="form-control" maxLength="50" name="surname" onChange={this.onChange} value={this.state.surname}/>
                 </div>
                 <div className="form-group col-md-2">
                   <label htmlFor="inputCity">Stát</label>
-                  <input type="text" className="form-control" name="country" onChange={this.onChange} value={this.state.country}/>
+                  <input type="text" className="form-control" maxLength="3" name="country" onChange={this.onChange} value={this.state.country}/>
                 </div>
               </div>
             </form>
@@ -98,11 +94,11 @@ class AuthorFormComponent extends React.Component {
           this.props.history.push("/app/author");
         }
         else{
-          PopupMessagesService.warn("Tento citát již v databázi je, prosím vložte jiný.");
+          PopupMessagesService.warn("Tento autor již v databázi je, prosím vložte jiného.");
         }
       }
       else{
-        PopupMessagesService.error("Při vkládání citátu nastala neočekávaná chyba!");
+        PopupMessagesService.error("Při vkládání autora nastala neočekávaná chyba!");
       }
     });
   }
@@ -113,13 +109,28 @@ class AuthorFormComponent extends React.Component {
       return false;
     }
 
+    if(this.state.firstname.length > 50){
+      PopupMessagesService.warn("Jméno může obsahovat maximálně 50 znaků!");
+      return false;
+    }
+
     if(this.state.surname.length <= 0){
       PopupMessagesService.warn("Zadejte příjmení autora!");
       return false;
     }
 
-    if(this.state.country.length <= 0 || this.state.country.length > 3){
-      PopupMessagesService.warn("Zadejte třípísmennout zkratku státu!");
+    if(this.state.surname.length > 50){
+      PopupMessagesService.warn("Příjmení může obsahovat maximálně 50 znaků!");
+      return false;
+    }
+
+    if(this.state.country.length <= 0){
+      PopupMessagesService.warn("Zadejte zkratku státu!");
+      return false;
+    }
+
+    if(this.state.country.length > 3){
+      PopupMessagesService.warn("Zkratka státu může mít maximálně 3 znaky!");
       return false;
     }
 
@@ -134,7 +145,7 @@ class AuthorFormComponent extends React.Component {
       if(res.data.status === 200) {
         console.log(res.data);
         if(res.data.status_key === "SUCCESS"){
-          PopupMessagesService.success("Autor přidán byl uložen.");
+          PopupMessagesService.success("Autor byl uložen.");
         }
         else{
           PopupMessagesService.warn("Tento autor již v databázi je, prosím vložte jiného.");

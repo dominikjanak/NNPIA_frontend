@@ -68,7 +68,7 @@ class RegisterComponent extends React.Component {
       <div className="container-fluid">
         <div className="row mt-5">
           <div className="col-12">
-            <form className="register bg-gray-2 py-5 px-4" onSubmit={(e) => this.handleSubmit(e)}>
+            <form className="register bg-gray-2 pt-5 pb-4 px-4" onSubmit={(e) => this.handleSubmit(e)}>
               <img src={ process.env.REACT_APP_LOGO_BIG_INV } alt="Logo" className="logo" />
               <h1 className="text-center title">Registrace</h1>
 
@@ -102,8 +102,8 @@ class RegisterComponent extends React.Component {
                 <input type="password" className="form-control" name="passwordAgain" required placeholder="Zadejte heslo" value={this.state.passwordAgain} onChange={this.onChange} />
               </div>
               <input type="submit" className="btn w-100 btn-primary" value="Zaregistrovat se" />
+              <Link className="btn w-100 mt-2 btn-link text-center" to="/login">Přihlásit se</Link>
             </form>
-            <p className="text-center mt-3"><Link to="/login">Přihlásit se</Link></p>
           </div>
         </div>
       </div>

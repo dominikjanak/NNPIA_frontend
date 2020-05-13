@@ -47,7 +47,7 @@ class LoginComponent extends React.Component {
                 <div className="container-fluid">
                     <div className="row mt-5">
                         <div className="col-12">
-                            <form className="login bg-gray-2 py-5 px-4" onSubmit={(e) => this.handleSubmit(e)}>
+                            <form className="login bg-gray-2 pt-5 pb-4 px-4" onSubmit={(e) => this.handleSubmit(e)}>
                                 <img src={ process.env.REACT_APP_LOGO_BIG_INV } alt="Logo" className="logo" />
                                 <h1 className="text-center title">Příhlášení</h1>
 
@@ -61,11 +61,11 @@ class LoginComponent extends React.Component {
                                     <input type="password" className="form-control" name="password" required placeholder="Zadejte heslo" value={this.state.password} onChange={this.onChange} />
                                 </div>
                                 <input type="submit" className="btn w-100 btn-primary" value="Přihlásit se" />
+                                <Link className="btn w-100 mt-2 btn-link text-center" to="/register">Zaregistrovat se</Link>
                             </form>
-                            <p className="text-center mt-3"><Link to="/register">Zaregistrovat se</Link></p>
                         </div>
                     </div>
-                    <div className="row">
+                    <div className="row mt-4">
                         <div className="col-12 text-center">
                             <table className="table table-bordered table-striped login-table-fit">
                                 <thead>
