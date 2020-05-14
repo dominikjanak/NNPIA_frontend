@@ -2,7 +2,7 @@ import * as React from 'react';
 import '../../styles/register.css';
 import SessionService from "../../service/SessionService.js";
 import PopupMessagesService from "../../service/PopupMessagesService.js";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 
 /**
  * Register component
@@ -120,4 +120,4 @@ class RegisterComponent extends React.Component {
     this.setState({[e.target.name]: e.target.value});
 }
 
-export default RegisterComponent;
+export default withRouter(RegisterComponent);
