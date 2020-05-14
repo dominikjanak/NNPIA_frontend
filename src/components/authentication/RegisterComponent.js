@@ -1,8 +1,8 @@
 import * as React from 'react';
 import '../../styles/register.css';
 import SessionService from "../../service/SessionService.js";
-import PopupMessagesService from "../../service/PopupMessagesService.js";
 import {Link, withRouter} from "react-router-dom";
+import LoadingComponent from "../system/LoadingComponent";
 
 /**
  * Register component
@@ -16,7 +16,9 @@ class RegisterComponent extends React.Component {
       username: '',
       password: '',
       passwordAgain: '',
-      email: ''
+      email: '',
+      loader: true,
+      message: ''
     }
   }
 
@@ -71,6 +73,19 @@ class RegisterComponent extends React.Component {
                 <input type="password" className="form-control" name="passwordAgain" required
                        placeholder="Zadejte heslo" value={this.state.passwordAgain} onChange={this.onChange}/>
               </div>
+
+              {this.state.showLoading === true && (
+                <div className="text-center mb-3">
+                  <LoadingComponent />
+                </div>
+              )}
+
+              {this.state.message !== "" && (
+                <div className="alert alert-danger text-center" role="alert">
+                  {this.state.message}
+                </div>
+              )}
+
               <input type="submit" className="btn w-100 btn-primary" value="Zaregistrovat se"/>
               <Link className="btn w-100 mt-2 btn-link text-center" to="/login">Přihlásit se</Link>
             </form>
@@ -83,20 +98,22 @@ class RegisterComponent extends React.Component {
   // Process register
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({message: ""});
 
     if (this.state.username.length <= 3) {
-      PopupMessagesService.error("Uživatelské jméno musí obsahovat alespoň 3 znaky!");
+      this.setState({message: "Uživatelské jméno musí obsahovat alespoň 3 znaky!"});
       return;
     }
     if (this.state.password !== this.state.passwordAgain) {
-      PopupMessagesService.error("Hesla se musí shodovat!");
+      this.setState({message: "Hesla se musí shodovat!"});
       return;
     }
     if (this.state.password.length <= 6) {
-      PopupMessagesService.error("Heslo musí obsahovat alespoň 6 znaků!");
+      this.setState({message: "Heslo musí obsahovat alespoň 6 znaků!"});
       return;
     }
 
+    this.setState({showLoading: true});
     SessionService.register(this.state.username, this.state.password, this.state.firstname, this.state.surname, this.state.email).then(res => {
       if (res.data.status === 200) {
         SessionService.setUserInfo(res.data.result);
@@ -104,15 +121,16 @@ class RegisterComponent extends React.Component {
       } else {
         switch (res.data.status_key) {
           case "ALREADY-EXISTS":
-            PopupMessagesService.warn("Zvolené uživatelské jméno nelze registrovat!");
+            this.setState({message: "Zvolené uživatelské jméno nelze registrovat!"});
             break;
           case "EMAIL-ALREADY-USED":
-            PopupMessagesService.warn("Zvolený email nelze registrovat!");
+            this.setState({message: "Zvolený email nelze registrovat!"});
             break;
           default:
-            PopupMessagesService.error("V průběhu registrace se vyskytla chyba!");
+            this.setState({message: "V průběhu registrace se vyskytla chyba!"});
         }
       }
+      this.setState({showLoading: false});
     });
   };
 

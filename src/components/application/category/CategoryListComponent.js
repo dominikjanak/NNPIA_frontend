@@ -7,7 +7,8 @@ import Category from "./Category";
 import {Link} from "react-router-dom";
 import {OrderComponent} from "../../system/OrderComponent";
 import CategoryService from "../../../service/CategoryService";
-import { animateScroll as Scroll } from 'react-scroll';
+import {animateScroll as Scroll} from 'react-scroll';
+import LoadingComponent from "../../system/LoadingComponent";
 
 /**
  * Category list component
@@ -22,6 +23,7 @@ class CategoryListComponent extends React.Component {
       orderBy: 'id',
       order: 'asc',
       categories: [],
+      showLoading: true,
       orderOptions: [
         {value: "id", label: "Vložení"},
         {value: "name", label: "Název"}
@@ -56,15 +58,23 @@ class CategoryListComponent extends React.Component {
             </tr>
             </thead>
             <tbody>
-            {this.state.categories.length > 0 ? (
-              this.state.categories.map((item, index) => (
-                <Category data={item} numering={(this.state.page - 1) * 25 + index + 1} key={item.id}
-                          removeHandler={this.handleRemoveAuthor}/>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className="text-center">To je nemilé, nic zde není!</td>
+            {this.state.showLoading === true ? (
+              <tr className="table-white">
+                <td colSpan="3" className="text-center big-spinner">
+                  <LoadingComponent/>
+                </td>
               </tr>
+            ) : (
+              this.state.categories.length > 0 ? (
+                this.state.categories.map((item, index) => (
+                  <Category data={item} numering={(this.state.page - 1) * 25 + index + 1} key={item.id}
+                            removeHandler={this.handleRemoveAuthor}/>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3" className="text-center">To je nemilé, nic zde není!</td>
+                </tr>
+              )
             )}
             </tbody>
           </table>
@@ -85,6 +95,7 @@ class CategoryListComponent extends React.Component {
   }
 
   reloadCategoryList = () => {
+    this.setState({showLoading: true});
     CategoryService.fetch(this.state.page - 1, this.state.orderBy, this.state.order).then((res) => {
       if (res.data.status === 200) {
         let data = res.data.result;
@@ -92,6 +103,7 @@ class CategoryListComponent extends React.Component {
       } else {
         PopupMessagesService.error("Data se nepodařilo načíst");
       }
+      this.setState({showLoading: false});
     });
     Scroll.scrollToTop();
   }

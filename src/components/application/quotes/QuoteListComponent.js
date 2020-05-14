@@ -8,7 +8,8 @@ import {OrderComponent} from "../../system/OrderComponent";
 import Quote from "./Quote";
 import RatingService from "../../../service/RatingService";
 import {Link} from "react-router-dom";
-import { animateScroll as Scroll } from 'react-scroll';
+import {animateScroll as Scroll} from 'react-scroll';
+import LoadingComponent from "../../system/LoadingComponent";
 
 /**
  * Quote list component
@@ -25,6 +26,7 @@ class QuoteListComponent extends React.Component {
       orderBy: 'id',
       order: 'asc',
       quotes: [],
+      showLoading: true,
       orderOptions: [
         {value: "id", label: "Vložení"},
         {value: "quote", label: "Citát"},
@@ -51,13 +53,19 @@ class QuoteListComponent extends React.Component {
           </div>
           <OrderComponent handler={this.handleOrderChange} options={this.state.orderOptions}/>
         </div>
-        {this.state.quotes.length > 0 ? (
-          this.state.quotes.map((item, index) => (
-            <Quote data={item} key={item.id} ratingHandler={this.handleQuoteRating}
-                   removeHandler={this.handleDeleteQuote}/>
-          ))
+        {this.state.showLoading === true ? (
+          <div className="text-center big-spinner mt-3">
+            <LoadingComponent />
+          </div>
         ) : (
-          <div className="text-center rounded bg-gray-3 my-4 py-3 text-gray-7">To je nemilé, ale nic tu není!</div>
+          this.state.quotes.length > 0 ? (
+              this.state.quotes.map((item, index) => (
+                <Quote data={item} key={item.id} ratingHandler={this.handleQuoteRating}
+                       removeHandler={this.handleDeleteQuote}/>
+              ))
+            ) : (
+              <div className="text-center rounded bg-gray-3 my-4 py-3 text-gray-7">To je nemilé, ale nic tu není!</div>
+            )
         )}
         <div>
           <Pagination
@@ -76,6 +84,7 @@ class QuoteListComponent extends React.Component {
   }
 
   reloadQuoteList = () => {
+    this.setState({showLoading: true});
     QuoteService.fetch(this.state.page - 1, this.state.orderBy, this.state.order).then((res) => {
       if (res.data.status === 200) {
         let data = res.data.result;
@@ -83,6 +92,7 @@ class QuoteListComponent extends React.Component {
       } else {
         PopupMessagesService.error("Data se nepodařilo načíst");
       }
+      this.setState({showLoading: false});
     });
     Scroll.scrollToTop();
   }

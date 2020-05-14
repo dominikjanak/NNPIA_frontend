@@ -7,7 +7,8 @@ import Pagination from "react-js-pagination";
 import Author from "./Author";
 import {Link} from "react-router-dom";
 import {OrderComponent} from "../../system/OrderComponent";
-import { animateScroll as Scroll } from 'react-scroll';
+import {animateScroll as Scroll} from 'react-scroll';
+import LoadingComponent from "../../system/LoadingComponent";
 
 /**
  * Quote list component
@@ -23,6 +24,7 @@ class QuoteListComponent extends React.Component {
       orderBy: 'id',
       order: 'asc',
       authors: [],
+      showLoading: true,
       orderOptions: [
         {value: "id", label: "Vložení"},
         {value: "firstname", label: "Jméno autora"},
@@ -61,15 +63,23 @@ class QuoteListComponent extends React.Component {
             </tr>
             </thead>
             <tbody>
-            {this.state.authors.length > 0 ? (
-              this.state.authors.map((item, index) => (
-                <Author data={item} numering={(this.state.page - 1) * 25 + index + 1} key={item.id}
-                        removeHandler={this.handleRemoveAuthor}/>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5" className="text-center">To je nemilé, nic zde není!</td>
+            {this.state.showLoading === true ? (
+              <tr className="table-white">
+                <td colSpan="5" className="text-center big-spinner">
+                  <LoadingComponent/>
+                </td>
               </tr>
+            ) : (
+              this.state.authors.length > 0 ? (
+                this.state.authors.map((item, index) => (
+                  <Author data={item} numering={(this.state.page - 1) * 25 + index + 1} key={item.id}
+                          removeHandler={this.handleRemoveAuthor}/>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="text-center">To je nemilé, nic zde není!</td>
+                </tr>
+              )
             )}
             </tbody>
           </table>
@@ -90,6 +100,7 @@ class QuoteListComponent extends React.Component {
   }
 
   reloadAuthorList = () => {
+    this.setState({showLoading: true});
     AuthorService.fetch(this.state.page - 1, this.state.orderBy, this.state.order).then((res) => {
       if (res.data.status === 200) {
         let data = res.data.result;
@@ -97,6 +108,7 @@ class QuoteListComponent extends React.Component {
       } else {
         PopupMessagesService.error("Data se nepodařilo načíst");
       }
+      this.setState({showLoading: false});
     });
     Scroll.scrollToTop();
   }
