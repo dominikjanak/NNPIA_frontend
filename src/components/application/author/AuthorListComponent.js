@@ -117,8 +117,14 @@ class QuoteListComponent extends React.Component {
     PopupMessagesService.confirm("Opravdu chcete tohoto autora smazat?").then((res) => {
       if (res.value) {
         AuthorService.delete(id).then((res) => {
-          if (res.data.status === 200 && res.data.status_key === "SUCCESS") {
-            this.reloadAuthorList();
+          if (res.data.status === 200) {
+            if (res.data.status_key === "SUCCESS") {
+              this.reloadAuthorList();
+            } else if (res.data.status_key === "CANNOT-BE-DELETE") {
+              PopupMessagesService.error("Odstraňtě prvně citáty s tímto autorem!");
+            } else {
+              PopupMessagesService.error("Autora se nepodařilo odstranit!");
+            }
           } else {
             PopupMessagesService.error("Citát se nepodařilo odstranit!");
           }

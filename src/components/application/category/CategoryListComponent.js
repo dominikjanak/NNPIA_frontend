@@ -112,8 +112,14 @@ class CategoryListComponent extends React.Component {
     PopupMessagesService.confirm("Opravdu chcete tuto kategorii smazat?").then((res) => {
       if (res.value) {
         CategoryService.delete(id).then((res) => {
-          if (res.data.status === 200 && res.data.status_key === "SUCCESS") {
-            this.reloadCategoryList();
+          if (res.data.status === 200) {
+            if (res.data.status_key === "SUCCESS") {
+              this.reloadCategoryList();
+            } else if (res.data.status_key === "CANNOT-BE-DELETE") {
+              PopupMessagesService.error("Odstraňtě prvně citáty s touto kategorií!");
+            } else {
+              PopupMessagesService.error("Kategorie nebyla nalezena!");
+            }
           } else {
             PopupMessagesService.error("Kategorii se nepodařilo odstranit!");
           }
